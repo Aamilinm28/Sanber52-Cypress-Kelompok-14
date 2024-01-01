@@ -1,0 +1,10 @@
+{
+    "valid_email": "alherani99@gmail.com",
+    "valid_pass": "Juniviaa3",
+    "invalid_email": "junivia@gmail.com",
+    "invalid_pass" : "4345456",
+    "empty_email" : " ",
+    "empty_pass" : " "
+
+  }
+  
