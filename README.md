@@ -8,3 +8,6 @@ Pembagian Tugas :
 4. My Account > Edit Address - Devi Rahmawati
 5. Choose product(s) - Mursyid Salim
 6. View and Update Shopping Cart - Mei Nurfatdilah
+
+Daftar Anggota Team Beserta Username Github
+1. Mei Nurfatdilah - Meifadill
