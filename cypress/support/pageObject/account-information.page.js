@@ -13,6 +13,10 @@ class accountInformationPage {
     curPass = '#current-password'
     email = '#email'
     password = '#password'
+
+    editPass = '.change-password'
+    editUser = '.block-dashboard-info > .block-content > .box > .box-actions > .edit > span'
+
     passConfirm = '#password-confirmation'
     firstNameAlert = '#firstname-error'
     lastNameAlert = '#lastname-error'
@@ -47,12 +51,12 @@ class accountInformationPage {
     }
     
 
-    goToAccInformationEdit(email,pass){
+    goToAccInformationEdit(email,pass,mode){
         cy.get(loginPage.email).type(email)
         cy.get(loginPage.pass).type(pass)
         loginPage.clickLoginBtn()
         cy.url().should('include','/account/index/')
-        cy.goClick('.block-dashboard-info > .block-content > .box > .box-actions > .edit > span')
+        cy.goClick(mode)
     }
 
     editPassword(curPass,password,confPassword){

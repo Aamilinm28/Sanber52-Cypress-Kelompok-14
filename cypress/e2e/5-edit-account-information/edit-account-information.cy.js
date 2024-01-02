@@ -179,8 +179,20 @@ describe('My Account > Edit Account Information', () => {
       accountInformationPage.verifyErrorMsg(accountInformationPage.passAlert,accInformation.message.minPassword)
     })
 
+    //edit password - klik change password
+    it.only('change password', () => {
+      accountInformationPage.goToAccInformationEdit(Cypress.env('emailCustAcc'),Cypress.env('passCustAcc'),accountInformationPage.editPass)
+      cy.inputText(accountInformationPage.curPass,Cypress.env('passCustAcc'))
+      cy.inputText(accountInformationPage.password,Cypress.env('passCustAcc'))
+      cy.inputText(accountInformationPage.passConfirm,Cypress.env('passCustAcc'))
+      accountInformationPage.clickSaveBtn() 
+      cy.url().should('include','/account/login/')
+      accountInformationPage.verifyErrorMsg(accountInformationPage.successMsg,accInformation.message.success)
+    })
+    
+    
     //back to begin - reset
-    it.only('edit-firstName, lastName, email, & password - curPassword(valid), newPassword (emailCustAcc) & confPassword (same newPassword)', () => {
+    it('edit-firstName, lastName, email, & password - curPassword(valid), newPassword (emailCustAcc) & confPassword (same newPassword)', () => {
       accountInformationPage.goToAccInformationEdit(accInformation.newEmailCustAcc,accInformation.weakPass)
       accountInformationPage.resetData(accInformation.firstCustName,accInformation.lastCustName,Cypress.env('emailCustAcc'),accInformation.weakPass,Cypress.env('passCustAcc'),Cypress.env('passCustAcc'))
       cy.url().should('include','/account/login/')
