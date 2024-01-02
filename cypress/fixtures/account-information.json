@@ -1,0 +1,25 @@
+{
+    "newFirstCustName":"Sanbercode Cypress",
+    "newLastCustName":"Kelompok 14",
+    "newEmailCustAcc":"customer01@gmail.com",
+    "newEmailCustAccWrong":"customer01",
+    "newPassCustAcc":"SemangatBelajar@123",
+    "newPassCust":"SemangatBelajar@123",
+    "noPassMeter":"No Password",
+    "weakPassMeter":"Weak",
+    "mediumPassMeter":"Medium",
+    "strongPassMeter":"Strong",
+    "weakPass":"Asdfghjkl",
+    "mediumPass":"Asdfghjkl123",
+    "strongPass":"Asdfghjkl@123",
+    "veryStrongPass":"Asdfghjkl@123987",
+    "newPassCustAccWrong":"BukanPass@123",
+    "message":{
+      "success":"You saved the account information.",
+      "emailError":"Please enter a valid email address.",
+      "fieldRequired":"This is a required field.",
+      "passNotMatch":"The password doesn't match this account. Verify the password and try again.",
+      "passDifference":"Please enter the same value again."
+    }
+  }
+  
