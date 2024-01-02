@@ -25,6 +25,7 @@ class accountInformationPage {
     errorMsg='.message-error > div'
     passMeter= '#password-strength-meter'
 
+
     clickSaveBtn(){
         cy.get(this.saveBtn).click()
     }
@@ -56,6 +57,25 @@ class accountInformationPage {
 
     editPassword(curPass,password,confPassword){
         this.clickPassword()
+        cy.inputText(this.curPass,curPass)
+        cy.inputText(this.password,password)
+        cy.inputText(this.passConfirm,confPassword)
+        this.clickSaveBtn()
+    }
+
+    editEmail(email,password){
+        this.clickEmail()
+        cy.inputText(this.email,email)
+        cy.inputText(this.curPass,password)
+        this.clickSaveBtn()
+    }
+    
+    resetData(firstName,lastName,email,curPass,password,confPassword){
+        cy.inputText(this.firstName,firstName)
+        cy.inputText(this.lastName,lastName)
+        this.clickEmail()
+        this.clickPassword()
+        cy.inputText(this.email,email)
         cy.inputText(this.curPass,curPass)
         cy.inputText(this.password,password)
         cy.inputText(this.passConfirm,confPassword)

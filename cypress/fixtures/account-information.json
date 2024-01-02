@@ -1,4 +1,6 @@
 {
+    "firstCustName":"Ajrul Amilin",
+    "lastCustName":"Muflih",
     "newFirstCustName":"Sanbercode Cypress",
     "newLastCustName":"Kelompok 14",
     "newEmailCustAcc":"customer01@gmail.com",
@@ -9,7 +11,8 @@
     "weakPassMeter":"Weak",
     "mediumPassMeter":"Medium",
     "strongPassMeter":"Strong",
-    "weakPass":"Asdfghjkl",
+    "lowPass":"Asdfg12",
+    "weakPass":"Asdfg123",
     "mediumPass":"Asdfghjkl123",
     "strongPass":"Asdfghjkl@123",
     "veryStrongPass":"Asdfghjkl@123987",
@@ -19,7 +22,8 @@
       "emailError":"Please enter a valid email address.",
       "fieldRequired":"This is a required field.",
       "passNotMatch":"The password doesn't match this account. Verify the password and try again.",
-      "passDifference":"Please enter the same value again."
+      "passDifference":"Please enter the same value again.",
+      "minPassword":"Minimum length of this field must be equal or greater than 8 symbols"
     }
   }
   

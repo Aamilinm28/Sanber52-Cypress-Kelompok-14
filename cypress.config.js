@@ -2,16 +2,16 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
+
     baseUrl : 'https://magento.softwaretestingboard.com',
     env:{
       emailCustAcc:'customer00@gmail.com',
-      passCustAcc:'Password@123'
+      passCustAcc:'Password@123',
+      username: "meifadil"
     },
-    setupNodeEvents(on, config) {
-      
-      // implement node event listeners here
-    },
-    viewportHeight : 680,
-    defaultCommandTimeout : 5000
+    viewportWidth: 1280,
+    viewportHeight: 680,
+    defaultCommandTimeout: 5000,
+
   },
 });
