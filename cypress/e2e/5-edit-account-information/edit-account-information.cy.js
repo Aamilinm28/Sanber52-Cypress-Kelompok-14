@@ -189,7 +189,7 @@ describe('My Account > Edit Account Information', () => {
       cy.url().should('include','/account/login/')
       accountInformationPage.verifyErrorMsg(accountInformationPage.successMsg,accInformation.message.success)
     })
-    
+  
     
     //back to begin - reset
     it('edit-firstName, lastName, email, & password - curPassword(valid), newPassword (emailCustAcc) & confPassword (same newPassword)', () => {
