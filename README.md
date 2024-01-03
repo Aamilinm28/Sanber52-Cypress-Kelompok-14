@@ -11,3 +11,4 @@ Pembagian Tugas :
 
 Daftar Anggota Team Beserta Username Github
 1. Mei Nurfatdilah - Meifadill
+2. Mursyid Salim - Mursyidslm
