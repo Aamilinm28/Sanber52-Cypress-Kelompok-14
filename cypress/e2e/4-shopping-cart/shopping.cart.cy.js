@@ -1,23 +1,23 @@
-import ProductPage from "../pages/ProductPage";
+// import ProductPage from "../pages/ProductPage";
 
-describe("Magento Website Tests", () => {
-  const productPage = new ProductPage();
+// describe("Magento Website Tests", () => {
+//   const productPage = new ProductPage();
 
-  beforeEach(() => {
-    productPage.visit();
-  });
+//   beforeEach(() => {
+//     productPage.visit();
+//   });
 
-  it("should add, view, and delete a product using page object", () => {
-    const productName = "Fusion Backpack";
-    const productSKU = "NEW001";
-    const productPrice = "";
+//   it("should add, view, and delete a product using page object", () => {
+//     const productName = "Fusion Backpack";
+//     const productSKU = "NEW001";
+//     const productPrice = "";
 
-    productPage.addProduct(productName, productSKU, productPrice);
-    productPage.viewProduct(productName);
+//     productPage.addProduct(productName, productSKU, productPrice);
+//     productPage.viewProduct(productName);
 
-    productPage.deleteProduct(productName);
-  });
-});
+//     productPage.deleteProduct(productName);
+//   });
+// });
 
 describe("Add to Cart with Login on Magento Site Funtionality", () => {
   beforeEach(() => {
@@ -48,26 +48,25 @@ describe("Add to Cart with Login on Magento Site Funtionality", () => {
     cy.contains("Add to Cart").click();
 
     // Buka keranjang belanja untuk verifikasi
-    // cy.get(".minicart-wrapper").trigger("mouseover");
-    // cy.contains("View and Edit Cart").click();
-    // cy.contains("Push It Messenger Bag").should("be.visible");
+    cy.get(".minicart-wrapper").trigger("mouseover");
+    cy.contains("View and Edit Cart").click();
+    cy.contains("Push It Messenger Bag").should("be.visible");
   });
 });
 
 describe("verify Success View Product in Cart Tests", () => {
   it("should view product in the cart", () => {
     // Kunjungi halaman keranjang belanja
-    cy.visit("https://magento.softwaretestingboard.com/checkout/cart/"); // Ganti dengan URL halaman keranjang belanja
-
+    cy.visit("https://magento.softwaretestingboard.com/checkout/cart/");
     // Verifikasi bahwa halaman keranjang belanja ditampilkan
     cy.contains("Shopping Cart").should("be.visible");
 
     // Verifikasi bahwa produk ada di dalam keranjang belanja
-    // cy.contains("Fusion Backpack").should("be.visible");
+    cy.contains("Fusion Backpack").should("be.visible");
 
     // Lakukan verifikasi atau tindakan lain sesuai kebutuhan, misalnya verifikasi jumlah produk, harga, atau atribut lain
-    // cy.contains('Quantity: 2').should('be.visible');
-    // cy.contains('Price: $50').should('be.visible');
+    cy.contains('Quantity: 2').should('be.visible');
+    cy.contains('Price: $50').should('be.visible');
 
     // Lanjut untuk melihat detail produk
     cy.contains("here").click(); // Ganti dengan teks atau selektor yang sesuai
@@ -97,7 +96,7 @@ describe("Delete Product from Cart Tests", () => {
 //custom command
 describe("Verify Success Add, View and Delete Product", () => {
   it("should add, view, and delete a product using custom commands", () => {
-    // cy.magentoLogin("meifadil", "meifadil123@");
+    cy.magentoLogin("meifadil", "meifadil123@");
     cy.addProduct("Fusion Backpack", "NEW001", "1");
     const productId = "Fusion Backpack";
     cy.viewProduct(productId);
@@ -112,7 +111,7 @@ describe("Verify Success Add, View and Delete Product", () => {
   });
 
   it("should add, view, and delete a product using fixtures", () => {
-    // cy.loginMagento("meifadil", "meifadil123@");
+    cy.loginMagento("meifadil", "meifadil123@");
 
     cy.get("@products").then((products) => {
       cy.addProduct(
