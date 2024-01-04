@@ -1,140 +1,194 @@
-// import ProductPage from "../pages/ProductPage";
+import "cypress-xpath";
 
-// describe("Magento Website Tests", () => {
-//   const productPage = new ProductPage();
+import loginPage from "../../support/pageObject/loginPage";
+import cartPage from "../../support/pageObject/cartPage";
+const shoppingCart = require("../../fixtures/shoppingCart.json");
 
-//   beforeEach(() => {
-//     productPage.visit();
-//   });
-
-//   it("should add, view, and delete a product using page object", () => {
-//     const productName = "Fusion Backpack";
-//     const productSKU = "NEW001";
-//     const productPrice = "";
-
-//     productPage.addProduct(productName, productSKU, productPrice);
-//     productPage.viewProduct(productName);
-
-//     productPage.deleteProduct(productName);
-//   });
-// });
-
-describe("Add to Cart with Login on Magento Site Funtionality", () => {
-  beforeEach(() => {
-    // Buka situs dan lakukan login
+describe("Verify Success Shopping Cart Functionality", () => {
+  it("Login, Add Product to Cart, View Product, and Delete Product from Cart", () => {
+    // Kunjungi halaman website
     cy.visit("https://magento.softwaretestingboard.com/");
-    cy.contains("Sign In").click();
-    cy.get("#email").type("meifadil@xx.com");
-    cy.get("#pass").type("meifadil123@");
+
+    // Login
+    cy.get(".header.panel > .header.links > .authorization-link > a").click();
+    cy.get("#email").type("meimei@gmail.com");
+    cy.get("#pass").type("meimei123@");
     cy.get("#send2").click();
-  });
 
-  it("verify Success Add product to cart after login", () => {
-    // Temukan elemen produk dan klik untuk membuka halaman produk
-    cy.contains("Fusion Backpack").click();
+    // Tambahkan produk ke keranjang
+    cy.visit("https://magento.softwaretestingboard.com/");
+    cy.contains("Hero Hoodie").click({ force: true });
 
-    it("should select size, color, and quantity in shopping cart", () => {
-      // Kunjungi halaman produk yang akan ditambahkan ke keranjang belanja
-      cy.visit("https://magento.softwaretestingboard.com/your-product-url");
+    // Memilih ukuran
+    cy.xpath(
+      "//div[@id='product-options-wrapper']//div[@class='swatch-opt']/div[1]/div[@role='listbox']/div[3]"
+    ).click({
+      force: true,
+    });
+    cy.contains("M").click({ force: true });
 
-      cy.get("#add-to-cart-button").click();
-      // Verifikasi bahwa produk telah ditambahkan ke keranjang
-      cy.contains("Product added to cart successfully").should("be.visible");
-      // Lanjut ke halaman keranjang belanja
-      cy.get("#cart-icon").click();
+    // Memilih warna
+    cy.xpath(
+      "//div[@id='product-options-wrapper']//div[@class='swatch-opt']/div[2]/div[@role='listbox']/div[3]"
+    ).click({
+      force: true,
+    });
+    cy.contains("Green").click({ force: true });
+
+    // Mengisi jumlah
+    cy.xpath("/html//input[@id='qty']").type("2");
+
+    // Menambahkan produk ke keranjang
+    cy.contains("Add to Cart").click({ force: true });
+
+    // Lihat produk yang telah ditambahkan
+    cy.xpath(
+      "//body//div[@class='minicart-wrapper']/a[@href='https://magento.softwaretestingboard.com/checkout/cart/']/span[@class='counter qty']/span[@class='counter-number']"
+    ).click({ force: true });
+    cy.contains("View and Edit Cart").click({ force: true });
+
+    // Hapus produk dari keranjang
+    cy.xpath(
+      "/html//table[@id='shopping-cart-table']/tbody[@class='cart item']//a[@title='Remove item']"
+    ).within(() => {
+      cy.contains("Remove").click({ force: true });
     });
 
-    // Tambahkan produk ke keranjang belanja
-    cy.contains("Add to Cart").click();
-
-    // Buka keranjang belanja untuk verifikasi
-    cy.get(".minicart-wrapper").trigger("mouseover");
-    cy.contains("View and Edit Cart").click();
-    cy.contains("Push It Messenger Bag").should("be.visible");
+    // Verifikasi keranjang kosong setelah menghapus produk
+    cy.contains("You have no items in your shopping cart.");
   });
 });
 
-describe("verify Success View Product in Cart Tests", () => {
-  it("should view product in the cart", () => {
-    // Kunjungi halaman keranjang belanja
-    cy.visit("https://magento.softwaretestingboard.com/checkout/cart/");
-    // Verifikasi bahwa halaman keranjang belanja ditampilkan
-    cy.contains("Shopping Cart").should("be.visible");
-
-    // Verifikasi bahwa produk ada di dalam keranjang belanja
-    cy.contains("Fusion Backpack").should("be.visible");
-
-    // Lakukan verifikasi atau tindakan lain sesuai kebutuhan, misalnya verifikasi jumlah produk, harga, atau atribut lain
-    cy.contains('Quantity: 2').should('be.visible');
-    cy.contains('Price: $50').should('be.visible');
-
-    // Lanjut untuk melihat detail produk
-    cy.contains("here").click(); // Ganti dengan teks atau selektor yang sesuai
-
-    // Verifikasi bahwa halaman detail produk yang ada di keranjang ditampilkan
-    cy.contains("Product Details").should("be.visible");
-  });
-});
-
-describe("Delete Product from Cart Tests", () => {
-  it("should delete product from the cart", () => {
-    // Kunjungi halaman keranjang belanja
-    cy.visit("https://magento.softwaretestingboard.com/checkout/cart/");
-    // Verifikasi bahwa halaman keranjang belanja ditampilkan
-    cy.contains("Shopping Cart").should("be.visible");
-
-    // Verifikasi bahwa produk ada di dalam keranjang belanja
-    cy.contains("Fusion Backpack").should("be.visible");
-    // Hapus produk dari keranjang belanja
-    cy.contains("Remove").click();
-
-    // Verifikasi bahwa produk telah dihapus dari keranjang belanja
-    cy.contains("Fusion Backpack").should("not.exist");
-  });
-});
-
-//custom command
-describe("Verify Success Add, View and Delete Product", () => {
-  it("should add, view, and delete a product using custom commands", () => {
-    cy.magentoLogin("meifadil", "meifadil123@");
-    cy.addProduct("Fusion Backpack", "NEW001", "1");
-    const productId = "Fusion Backpack";
-    cy.viewProduct(productId);
-    cy.deleteProduct(productId);
-  });
-});
-
-//fixtures
-describe("Verify Success Add, View and Delete Product", () => {
+//FIXTURES
+describe("Verify Success Shopping Cart Functionality - Fixtures", () => {
   beforeEach(() => {
-    cy.fixture("products.json").as("products");
+    cy.visit("https://magento.softwaretestingboard.com/");
   });
 
-  it("should add, view, and delete a product using fixtures", () => {
-    cy.loginMagento("meifadil", "meifadil123@");
-
-    cy.get("@products").then((products) => {
-      cy.addProduct(
-        products.newProduct.name,
-        products.newProduct.sku,
-        products.newProduct.price
-      );
-      cy.visit(
-        "https://magento.softwaretestingboard.com/admin/catalog/product/grid/"
-      );
-      cy.contains(products.newProduct.name).should("be.visible");
-
-      // Menggunakan find untuk mendapatkan ID produk yang baru saja ditambahkan
-      cy.get("tr")
-        .contains(products.newProduct.name)
-        .parent()
-        .within(() => {
-          cy.get('input[name="product_ids[]"]')
-            .invoke("val")
-            .then((productId) => {
-              cy.deleteProduct(productId);
-            });
-        });
+  it("Login, Add Product to Cart, View Product, and Delete Product from Cart", () => {
+    // Load data dari fixture
+    cy.fixture("shoppingCart").then((shoppingCart) => {
+      // Login
+      cy.xpath(
+        "/html/body[@class='cms-home cms-index-index page-layout-1column']//div[@class='panel wrapper']/div/ul[@class='header links']/li[@class='authorization-link']/a[@href='https://magento.softwaretestingboard.com/customer/account/login/referer/aHR0cHM6Ly9tYWdlbnRvLnNvZnR3YXJldGVzdGluZ2JvYXJkLmNvbS8%2C/']"
+      ).click({ force: true });
+      cy.xpath("//input[@id='email']").type(shoppingCart.email);
+      cy.xpath("//input[@name='login[password]']").type(shoppingCart.password);
+      cy.get("#send2").click({ force: true });
     });
+
+    // Tambahkan produk ke keranjang
+    cy.visit("https://magento.softwaretestingboard.com/");
+    cy.contains("Hero Hoodie").click({ force: true });
+
+    // Memilih ukuran
+    cy.xpath(
+      "//div[@id='product-options-wrapper']//div[@class='swatch-opt']/div[1]/div[@role='listbox']/div[3]"
+    ).click({
+      force: true,
+    });
+    cy.contains("M").click({ force: true });
+
+    // Memilih warna
+    cy.xpath(
+      "//div[@id='product-options-wrapper']//div[@class='swatch-opt']/div[2]/div[@role='listbox']/div[3]"
+    ).click({
+      force: true,
+    });
+    cy.contains("Green").click({ force: true });
+
+    // Mengisi jumlah
+    cy.xpath("/html//input[@id='qty']").type("2");
+
+    // Menambahkan produk ke keranjang
+    cy.contains("Add to Cart").click({ force: true });
+
+    // Lihat produk yang telah ditambahkan
+    cy.xpath(
+      "//body//div[@class='minicart-wrapper']/a[@href='https://magento.softwaretestingboard.com/checkout/cart/']/span[@class='counter qty']/span[@class='counter-number']"
+    ).click({ force: true });
+    cy.contains("View and Edit Cart").click({ force: true });
+
+    // Hapus produk dari keranjang
+    cy.xpath(
+      "/html//table[@id='shopping-cart-table']/tbody[@class='cart item']//a[@title='Remove item']"
+    ).within(() => {
+      cy.contains("Remove").click({ force: true });
+    });
+
+    // Verifikasi keranjang kosong setelah menghapus produk
+    cy.contains("You have no items in your shopping cart.");
+  });
+});
+
+//CUSTOM COMMAND
+describe("Verify Success Shopping Cart Functionality - Custom Command", () => {
+  beforeEach(() => {
+    cy.visit("https://magento.softwaretestingboard.com/");
+  });
+
+  it("Login, Add Product to Cart, View Product, and Delete Product from Cart", () => {
+    cy.login();
+
+    // Tambahkan produk ke keranjang
+    cy.visit("https://magento.softwaretestingboard.com/");
+    cy.contains("Hero Hoodie").click({ force: true });
+
+    // Memilih ukuran
+    cy.xpath(
+      "//div[@id='product-options-wrapper']//div[@class='swatch-opt']/div[1]/div[@role='listbox']/div[3]"
+    ).click({
+      force: true,
+    });
+    cy.contains("M").click({ force: true });
+
+    // Memilih warna
+    cy.xpath(
+      "//div[@id='product-options-wrapper']//div[@class='swatch-opt']/div[2]/div[@role='listbox']/div[3]"
+    ).click({
+      force: true,
+    });
+    cy.contains("Green").click({ force: true });
+
+    // Mengisi jumlah
+    cy.xpath("/html//input[@id='qty']").type("2");
+
+    // Menambahkan produk ke keranjang
+    cy.contains("Add to Cart").click({ force: true });
+
+    // Lihat produk yang telah ditambahkan
+    cy.xpath(
+      "//body//div[@class='minicart-wrapper']/a[@href='https://magento.softwaretestingboard.com/checkout/cart/']/span[@class='counter qty']/span[@class='counter-number']"
+    ).click({ force: true });
+    cy.contains("View and Edit Cart").click({ force: true });
+
+    // Hapus produk dari keranjang
+    cy.xpath(
+      "/html//table[@id='shopping-cart-table']/tbody[@class='cart item']//a[@title='Remove item']"
+    ).within(() => {
+      cy.contains("Remove").click({ force: true });
+    });
+
+    // Verifikasi keranjang kosong setelah menghapus produk
+    cy.contains("You have no items in your shopping cart.");
+  });
+});
+
+//PAGE OBJECT MODEL (POM)
+describe("Verify Success Shopping Cart Functionality - Page Object Model", () => {
+  beforeEach(() => {
+    loginPage.visitLoginPage();
+  });
+
+  it("Login, Add Product to Cart, View Product, and Delete Product from Cart", () => {
+    const email = "meimei@gmail.com";
+    const password = "meimei123@";
+
+    loginPage.login(email, password);
+
+    cartPage.addProductToCart();
+    cartPage.viewAndEditCart();
+    cartPage.removeProductFromCart();
+    cartPage.verifyEmptyCart();
   });
 });
