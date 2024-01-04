@@ -1,4 +1,5 @@
 import logincp from "../../support/pageObject/login-choose-product"
+// digunakan untuk memanggil function yang ada di folder berbeda contohnya di folder login choose...
 
 
 describe("Login and Choose Product", () => {
@@ -13,6 +14,7 @@ describe("Login and Choose Product", () => {
 
     it('Choose Product with Login',() => {
         cy.get(logincp.signinBtn).click()
+        // logincp adalah function yang dibuat di folder login choose yang berisi variabel yang telah diseting
         cy.get(logincp.formEmail).type('mursyid@gmail.com')
         cy.get(logincp.formPassword).type('123qweASD')
         cy.get(logincp.Loginbttn).click(),
