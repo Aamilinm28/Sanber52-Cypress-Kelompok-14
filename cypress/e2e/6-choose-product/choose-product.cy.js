@@ -19,7 +19,7 @@ describe("Login and Choose Product", () => {
         cy.get(':nth-child(3) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click()
     })
     // memilih produk tanpa login pada categories men
-    it.only('Choose Another Product On Men Categories without Login', () => {
+    it('Choose Another Product On Men Categories without Login', () => {
         cy.get('#ui-id-5').click()
         cy.get(':nth-child(1) > .product-item-info > .product-item-photo > .product-image-container > .product-image-wrapper > .product-image-photo').click()
         cy.get(':nth-child(3) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click()
