@@ -1,0 +1,9 @@
+{
+    "valid_email": "mursyid@gmail.com",
+    "valid_pass": "123qweASD",
+    "invalid_email": "mursa@gmail.com",
+    "invalid_pass" : "122332",
+    "empty_email" : "",
+    "empty_pass" : ""
+
+  }
