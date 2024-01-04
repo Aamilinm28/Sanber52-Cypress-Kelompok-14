@@ -1,5 +1,4 @@
-import loginChooseProduct from "../../support/pageObject/login-choose-product"
-// const loginPage2 = new loginPage2()
+import logincp from "../../support/pageObject/login-choose-product"
 
 
 describe("Login and Choose Product", () => {
@@ -13,10 +12,10 @@ describe("Login and Choose Product", () => {
     })
 
     it('Choose Product with Login',() => {
-        cy.get(loginChooseProduct.signinBtn).click()
-        cy.get(loginChooseProduct.formEmail).type('mursyid@gmail.com')
-        cy.get(loginChooseProduct.formPassword).type('123qweASD')
-        cy.get(loginChooseProduct.Loginbttn).click(),
+        cy.get(logincp.signinBtn).click()
+        cy.get(logincp.formEmail).type('mursyid@gmail.com')
+        cy.get(logincp.formPassword).type('123qweASD')
+        cy.get(logincp.Loginbttn).click(),
         cy.get(':nth-child(3) > .product-item-info > .product-item-photo > .product-image-container > .product-image-wrapper > .product-image-photo').click()
         cy.get(':nth-child(3) > .product-item-info > .photo > .product-image-container > .product-image-wrapper > .product-image-photo').click()
     })
